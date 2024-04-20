@@ -1,0 +1,311 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "c2db8f3e",
+   "metadata": {},
+   "source": [
+    "28_А) Используя лямбда-функцию, в заданном массиве отсортируйте числа следующим образом: сначала идут положительные числа по возрастанию, затем отрицательные — также по возрастанию."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "23dd6474",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0, 1, 2, 3, 5, -1, -2, -4, -99]\n"
+     ]
+    }
+   ],
+   "source": [
+    "array = [3, -1, 2, -4, 1, 0, 5, -2, -99]\n",
+    "sort_arr = sorted(array, key=lambda x: (x < 0, abs(x)))\n",
+    "print(sort_arr)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9b4d68a9",
+   "metadata": {},
+   "source": [
+    "28_Б) Напишите программу для сортировки каждого подсписка строк в заданном списке списков. Используйте лямбда-функцию."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "aededf0d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[['Арбузиус', 'Банана', 'Яблочко'], ['Котик', 'Мышь', 'Пёсик', 'Черепашка'], ['Замазка', 'Карандаш', 'Ластик', 'Ручка']]\n"
+     ]
+    }
+   ],
+   "source": [
+    "list_of_lists = [['Банана', 'Яблочко', 'Арбузиус'], ['Котик', 'Пёсик', 'Черепашка', 'Мышь'], ['Ручка', 'Карандаш', 'Ластик', 'Замазка']]\n",
+    "sorted_lists = [sorted(sublist, key=lambda x: x) for sublist in list_of_lists]\n",
+    "print(sorted_lists)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a3d94107",
+   "metadata": {},
+   "source": [
+    "28_В) Вычислить произведение элементов заданного списка чисел с помощью лямбда-функции."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "299f1b17",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "-720\n"
+     ]
+    }
+   ],
+   "source": [
+    "from functools import reduce\n",
+    "\n",
+    "n = [1, 2, 3, 4, 5, 6, -1]\n",
+    "result = reduce(lambda x, y: x * y, n)\n",
+    "print(result)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ba43d9a3",
+   "metadata": {},
+   "source": [
+    "29_А) Найдите соотношение положительных чисел, отрицательных чисел и нулей в массиве целых чисел. Пример: [0, 1, 2, –1, –5, 6, 0, –3, –2, 3, 4, 6, 8] → (0.54, 0.31, 0.15); [2, 1, 2, –1, –5, 6, 4, –3, –2, 3, 4, 6, 8] → (0.69, 0.31, 0.0)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "98730372",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(0.3333333333333333, 0.3333333333333333, 0.3333333333333333)\n",
+      "(0.625, 0.25, 0.125)\n"
+     ]
+    }
+   ],
+   "source": [
+    "from functools import reduce\n",
+    "\n",
+    "def ratios(arr):\n",
+    "    total = len(arr)\n",
+    "    positives = len(list(filter(lambda x: x > 0, arr)))\n",
+    "    negatives = len(list(filter(lambda x: x < 0, arr)))\n",
+    "    zeros = total - positives - negatives\n",
+    "    positive_r = positives / total\n",
+    "    negative_r = negatives / total\n",
+    "    zero_r = zeros / total\n",
+    "    return (positive_r, negative_r, zero_r)\n",
+    "\n",
+    "arr1 = [1, 2, 3, -1, -2, -3, 0, 0, 0]\n",
+    "arr2 = [1, 2, 3, 4, 5, -1, -2, 0]\n",
+    "\n",
+    "print(calculate_ratios(arr1))\n",
+    "print(calculate_ratios(arr2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e526cf65",
+   "metadata": {},
+   "source": [
+    "29_Б) Сгенерировать список целых чисел. С помощью функции filter() выбрать из списка все отрицательные числа и упорядочить их по возрастанию. Используя функцию reduce(), найти их произведение."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "id": "c46f3f28",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[-5, -4, -3, -2, -1]\n",
+      "-120\n"
+     ]
+    }
+   ],
+   "source": [
+    "from functools import reduce\n",
+    "\n",
+    "n = [2, -5, -3, 4, -1, 6, -2, 8, -2^2, 0, -(2^2)]\n",
+    "\n",
+    "negatives = list(filter(lambda x: x < 0, n))\n",
+    "sorted_negatives = sorted(negatives)\n",
+    "\n",
+    "product = reduce(lambda x, y: x * y, sorted_negatives)\n",
+    "\n",
+    "print(sorted_negatives)\n",
+    "print(product)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0a7c01fb",
+   "metadata": {},
+   "source": [
+    "30_А) Создайте декоратор, который будет ограничивать время выполнения функции и выбрасывать исключение при превышении этого времени. (Моя не смог... даже с ИИ и штрудирование интернеты...)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 95,
+   "id": "76257d89",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "AttributeError",
+     "evalue": "module 'signal' has no attribute 'SIGALRM'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+      "\u001b[1;32m~\\AppData\\Local\\Temp\\ipykernel_19116\\2736505066.py\u001b[0m in \u001b[0;36m<module>\u001b[1;34m\u001b[0m\n\u001b[0;32m     30\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     31\u001b[0m \u001b[1;32mtry\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m---> 32\u001b[1;33m     \u001b[0mmy_function\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mtimeout\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m     33\u001b[0m \u001b[1;32mexcept\u001b[0m \u001b[0mTimeoutError\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     34\u001b[0m     \u001b[0mprint\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;34m\"my_function execution timed out\"\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;32m~\\AppData\\Local\\Temp\\ipykernel_19116\\2736505066.py\u001b[0m in \u001b[0;36mwrapper\u001b[1;34m(*args, **kwargs)\u001b[0m\n\u001b[0;32m     10\u001b[0m                 \u001b[1;32mraise\u001b[0m \u001b[0mTimeoutError\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;34m\"Function execution timed out\"\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     11\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m---> 12\u001b[1;33m             \u001b[0mold_handler\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0msignal\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0msignal\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0msignal\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mSIGALRM\u001b[0m\u001b[1;33m,\u001b[0m \u001b[0mtimeout_handler\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m     13\u001b[0m             \u001b[0msignal\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0malarm\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mseconds\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     14\u001b[0m             \u001b[1;32mtry\u001b[0m\u001b[1;33m:\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+      "\u001b[1;31mAttributeError\u001b[0m: module 'signal' has no attribute 'SIGALRM'"
+     ]
+    }
+   ],
+   "source": [
+    "import signal\n",
+    "\n",
+    "class TimeoutError(Exception):\n",
+    "    pass\n",
+    "\n",
+    "def timeout(seconds):\n",
+    "    def decorator(func):\n",
+    "        def wrapper(*args, **kwargs):\n",
+    "            def timeout_handler(signum, frame):\n",
+    "                raise TimeoutError(\"Function execution timed out\")\n",
+    "\n",
+    "            old_handler = signal.signal(signal.SIGALRM, timeout_handler)\n",
+    "            signal.alarm(seconds)\n",
+    "            try:\n",
+    "                result = func(*args, **kwargs)\n",
+    "            finally:\n",
+    "                signal.signal(signal.SIGALRM, old_handler)\n",
+    "                signal.alarm(0)\n",
+    "            return result\n",
+    "        return wrapper\n",
+    "    return decorator\n",
+    "\n",
+    "\n",
+    "@timeout(3)  \n",
+    "def my_function():\n",
+    "    print(\"Запуск функции, ожидаааайте...\")\n",
+    "    time.sleep(2) \n",
+    "    print(\"Функция заверщена!\")\n",
+    "\n",
+    "try:\n",
+    "    my_function()\n",
+    "except TimeoutError:\n",
+    "    print(\"Превышено время выполнения функции!\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "57d10b05",
+   "metadata": {},
+   "source": [
+    "30_Б) Создайте декоратор, который будет заменять значение аргумента на результат выполнения заданной функции с использованием других аргументов функции только если оно удовлетворяет определенному условию."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "id": "9bc61feb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Even\n",
+      "4\n",
+      "5\n",
+      "Even\n"
+     ]
+    }
+   ],
+   "source": [
+    "def replace_value_if(condition, new_value):\n",
+    "    def decorator(func):\n",
+    "        def wrapper(*args, **kwargs):\n",
+    "            result = func(*args, **kwargs)\n",
+    "            if condition(result):\n",
+    "                return new_value\n",
+    "            return result\n",
+    "        return wrapper\n",
+    "    return decorator\n",
+    "\n",
+    "def is_even(num):\n",
+    "    return num % 3 == 0\n",
+    "\n",
+    "@replace_value_if(is_even, \"Even\")\n",
+    "def check_number(num):\n",
+    "    return num\n",
+    "\n",
+    "print(check_number(3))\n",
+    "print(check_number(4))\n",
+    "print(check_number(5))\n",
+    "print(check_number(6))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2bc93dbc",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.16"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
